@@ -1,0 +1,48 @@
+using Components;
+using Godot;
+using System;
+using System.Threading;
+
+public partial class Pendulum : RigidBody2D
+{
+	public Polygon2D Pole { get; private set; }
+
+	public Polygon2D Weight { get; private set; }
+
+	public CollisionShape2D BodyCollision { get; private set; }
+
+	public DimensionBox DimensionBox { get; private set; }
+
+	// Called when the node enters the scene tree for the first time.
+	public override void _Ready()
+	{
+		BodyCollision = GetNode<CollisionShape2D>(PendulumNaming.BODY_COLLISION);
+
+		Pole = GetNode<Polygon2D>(PendulumNaming.POLE);
+		Weight = Pole.GetNode<Polygon2D>(PendulumNaming.WEIGHT);
+
+		DimensionBox = GetNode<DimensionBox>(GlobalNaming.DIMENSION_BOX);
+
+		AddEvents();
+	}
+
+    public override void _ExitTree()
+    {
+        RemoveEvents();
+    }
+
+    public void AddEvents()
+	{
+		BodyEntered += Failure;
+	}
+
+	public void RemoveEvents()
+	{
+		BodyEntered -= Failure;
+	}
+
+	private void Failure(Node node)
+	{
+		Console.WriteLine("Hit");
+	}
+}
