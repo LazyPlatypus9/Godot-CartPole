@@ -1,14 +1,22 @@
 import asyncio
 import websockets
+import json
+from websocket_message import WebSocketMessage
+from global_enum import MessageTypeEnum
+from types import SimpleNamespace
 
 async def echo(websocket):
-    await websocket.send("Connection established")
+    # connection ping
+    await websocket.send(json.dumps(WebSocketMessage(MessageTypeEnum.CONFIRMATION.value, f"Connection established").__dict__))
     
     try:
         async for message in websocket:
-            await websocket.send(f"Received '{message}'")
+            trans_message = WebSocketMessage(**json.loads(message))
 
-            print(f"Received message from client: {message}")
+            # message ping
+            await websocket.send(json.dumps(WebSocketMessage(MessageTypeEnum.CONFIRMATION.value, f"Received").__dict__))
+
+            print(f"message_type: {trans_message.message_type}, content: {trans_message.content}")
     except websockets.exceptions.ConnectionClosed:
         pass
 

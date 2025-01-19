@@ -27,10 +27,10 @@ public partial class PlayerController : CharacterBody2D
 
 		// Get the input direction and handle the movement/deceleration.
 		// As good practice, you should replace UI actions with custom gameplay actions.
-		Vector2 direction = Input.GetVector(GlobalEnums.InputsEnum.move_left.ToString(), 
-											GlobalEnums.InputsEnum.move_right.ToString(), 
-											GlobalEnums.InputsEnum.move_up.ToString(), 
-											GlobalEnums.InputsEnum.move_down.ToString());
+		Vector2 direction = Input.GetVector(GlobalEnums.InputsEnum.MOVE_LEFT.ToString().ToLower(), 
+											GlobalEnums.InputsEnum.MOVE_RIGHT.ToString().ToLower(), 
+											GlobalEnums.InputsEnum.MOVE_UP.ToString().ToLower(), 
+											GlobalEnums.InputsEnum.MOVE_DOWN.ToString().ToLower());
 		
 		// runs on input
 		if (direction != Vector2.Zero)
