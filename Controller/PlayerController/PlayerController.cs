@@ -1,6 +1,8 @@
 using Components;
 using Godot;
 using System;
+using Utility;
+using static GlobalEnums;
 
 public partial class PlayerController : CharacterBody2D
 {
@@ -46,5 +48,7 @@ public partial class PlayerController : CharacterBody2D
 		Velocity = velocity;
 		
 		MoveAndSlide();
+
+		Global.Instance.SendToServer(new WebSocketMessage(MessageTypeEnum.DATA, new CartState(Pendulum.Rotation)));
 	}
 }

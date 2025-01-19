@@ -1,14 +1,11 @@
+using System;
+using System.Numerics;
 using System.Security.Cryptography.X509Certificates;
 using static GlobalEnums;
 
 namespace Utility
 {
-    /// <summary>
-    /// Yes, this class does not follow standard C# styling. The reason being that
-    /// this class will be used far less often than its Python counterpart therefore
-    /// in the war of style choices Python won. The Python and C# classes need to
-    /// hard match for the JSON mapping to work.
-    /// </summary>
+    
     public class WebSocketMessage
     {
         /// <summary>
@@ -16,20 +13,31 @@ namespace Utility
         /// </summary>
         public WebSocketMessage() {}
 
-        public WebSocketMessage(MessageTypeEnum messageTypeEnum)
+        public WebSocketMessage(MessageTypeEnum messageTypeEnum, string content = null)
         {
             message_type = (int)messageTypeEnum;
+
+            if (content == null)
+            {
+                this.content = messageTypeEnum.ToString();
+            }
         }
 
-
-        public WebSocketMessage(MessageTypeEnum messageTypeEnum, string content)
+        public WebSocketMessage(MessageTypeEnum messageTypeEnum, CartState cartState, string content = null)
         {
             message_type = (int)messageTypeEnum;
-            this.content = content;
+            cart_state = cartState;
+
+            if (content == null)
+            {
+                this.content = messageTypeEnum.ToString();
+            }
         }
 
         public int message_type { get; set; }
 
         public string content { get; set; }
+
+        public CartState cart_state { get; set; } = null;
     }
 }

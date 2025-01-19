@@ -5,18 +5,23 @@ from websocket_message import WebSocketMessage
 from global_enum import MessageTypeEnum
 from types import SimpleNamespace
 
+DEBUG = True
+
 async def echo(websocket):
     # connection ping
-    await websocket.send(json.dumps(WebSocketMessage(MessageTypeEnum.CONFIRMATION.value, f"Connection established").__dict__))
+    await websocket.send(json.dumps(WebSocketMessage(MessageTypeEnum.CONFIRMATION.value, str(MessageTypeEnum.CONFIRMATION), None).__dict__))
     
     try:
         async for message in websocket:
             trans_message = WebSocketMessage(**json.loads(message))
 
-            # message ping
-            await websocket.send(json.dumps(WebSocketMessage(MessageTypeEnum.CONFIRMATION.value, f"Received").__dict__))
+            if DEBUG:
+                # message ping
+                await websocket.send(json.dumps(WebSocketMessage(MessageTypeEnum.CONFIRMATION.value, str(MessageTypeEnum.CONFIRMATION), None).__dict__))
 
-            print(f"message_type: {trans_message.message_type}, content: {trans_message.content}")
+            if not trans_message.cart_state is None:
+                if DEBUG:
+                    print(f"message_type: {trans_message.message_type}, content: {trans_message.cart_state['pole_rotation']}")
     except websockets.exceptions.ConnectionClosed:
         pass
 

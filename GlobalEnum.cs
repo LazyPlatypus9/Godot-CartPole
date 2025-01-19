@@ -11,6 +11,7 @@ public static class GlobalEnums
 	public enum MessageTypeEnum
 	{
 		TERMINATION = 1,
-		CONFIRMATION = 2
+		CONFIRMATION = 2,
+		DATA = 3
 	}
 }
