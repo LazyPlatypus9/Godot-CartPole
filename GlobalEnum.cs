@@ -2,9 +2,15 @@ public static class GlobalEnums
 {
     public enum InputsEnum
 	{
-		move_left,
-		move_right,
-		move_up,
-		move_down
+		MOVE_LEFT,
+		MOVE_RIGHT,
+		MOVE_UP,
+		MOVE_DOWN
+	}
+
+	public enum MessageTypeEnum
+	{
+		TERMINATION = 1,
+		CONFIRMATION = 2
 	}
 }
