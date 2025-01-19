@@ -22,27 +22,5 @@ public partial class Pendulum : RigidBody2D
 		Weight = Pole.GetNode<Polygon2D>(PendulumNaming.WEIGHT);
 
 		DimensionBox = GetNode<DimensionBox>(GlobalNaming.DIMENSION_BOX);
-
-		AddEvents();
-	}
-
-    public override void _ExitTree()
-    {
-        RemoveEvents();
-    }
-
-    public void AddEvents()
-	{
-		BodyEntered += Failure;
-	}
-
-	public void RemoveEvents()
-	{
-		BodyEntered -= Failure;
-	}
-
-	private void Failure(Node node)
-	{
-		Console.WriteLine("Hit");
 	}
 }
