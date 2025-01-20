@@ -7,6 +7,7 @@ using System.Text.Json.Serialization;
 using System.Threading;
 using Godot;
 using Utility;
+using Utility.MessengerMessages;
 using static GlobalEnums;
 
 public sealed class Global 
@@ -58,6 +59,11 @@ public sealed class Global
                 WebSocketMessage translatedMessage = JsonSerializer.Deserialize<WebSocketMessage>(Encoding.UTF8.GetString(receiveBuffer, 0, result.Count));
 
                 Logger.Instance.Trace($"message_type: {translatedMessage.message_type}, content: {translatedMessage.content}", Logger.LogColor.Cyan);
+            
+                if ((MessageTypeEnum)translatedMessage.message_type == MessageTypeEnum.COMMAND)
+                {
+                    Messenger.Default.Send(new MoveCart() { InputsEnum = (InputsEnum)translatedMessage.cart_state.movement });
+                }
             }
         }
         

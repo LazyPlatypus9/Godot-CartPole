@@ -1,6 +1,8 @@
 import asyncio
 import websockets
 import json
+import random
+from cart_state import CartState
 from websocket_message import WebSocketMessage
 from global_enum import MessageTypeEnum
 from types import SimpleNamespace
@@ -22,6 +24,9 @@ async def echo(websocket):
             if not trans_message.cart_state is None:
                 if DEBUG:
                     print(f"message_type: {trans_message.message_type}, content: {trans_message.cart_state['pole_rotation']}")
+    
+            await websocket.send(json.dumps(WebSocketMessage(MessageTypeEnum.COMMAND.value, str(MessageTypeEnum.COMMAND), CartState(0, random.choice([0, 1]))).__dict__, 
+                                            default=lambda o: o.__dict__))
     except websockets.exceptions.ConnectionClosed:
         pass
 

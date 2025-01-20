@@ -2,6 +2,7 @@ using Components;
 using Godot;
 using System;
 using Utility;
+using Utility.MessengerMessages;
 using static GlobalEnums;
 
 public partial class PlayerController : CharacterBody2D
@@ -21,11 +22,18 @@ public partial class PlayerController : CharacterBody2D
     {
        	Pendulum = GetNode<Pendulum>(PendulumNaming.OBJECT_NAME);
 		HitBox = GetNode<HitBox>(GlobalNaming.HIT_BOX);
+
+		Messenger.Default.Register<MoveCart>(this, MoveCart);
+    }
+
+    public override void _ExitTree()
+    {
+        Messenger.Default.Unregister<MoveCart>(this, MoveCart);
     }
 
     public override void _PhysicsProcess(double delta)
 	{
-		Vector2 velocity = Velocity;
+		/*Vector2 velocity = Velocity;
 
 		// Get the input direction and handle the movement/deceleration.
 		// As good practice, you should replace UI actions with custom gameplay actions.
@@ -45,10 +53,26 @@ public partial class PlayerController : CharacterBody2D
 			velocity.X = Mathf.MoveToward(Velocity.X, 0, Speed);
 		}
 
-		Velocity = velocity;
+		Velocity = velocity;*/
 		
 		MoveAndSlide();
 
 		Global.Instance.SendToServer(new WebSocketMessage(MessageTypeEnum.DATA, new CartState(Pendulum.Rotation)));
+	}
+
+	private void MoveCart(MoveCart moveCart)
+	{
+		Vector2 velocity = Velocity;
+
+		if (moveCart.InputsEnum == InputsEnum.MOVE_LEFT)
+		{
+			velocity.X = -1 * Speed;
+		}
+		else if (moveCart.InputsEnum == InputsEnum.MOVE_RIGHT)
+		{
+			velocity.X = 1 * Speed;
+		}
+
+		Velocity = velocity;
 	}
 }

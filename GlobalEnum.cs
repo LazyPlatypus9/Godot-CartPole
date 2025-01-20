@@ -12,6 +12,7 @@ public static class GlobalEnums
 	{
 		TERMINATION = 1,
 		CONFIRMATION = 2,
-		DATA = 3
+		DATA = 3,
+		COMMAND = 4
 	}
 }
