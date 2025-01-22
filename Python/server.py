@@ -25,19 +25,19 @@ async def echo(websocket):
 
             if not trans_message.cart_state is None:
                 if DEBUG:
-                    print(f"message_type: {trans_message.message_type}, content: {trans_message.cart_state['pole_rotation']}")
+                    print(f"message_type: {trans_message.message_type}, content: {trans_message.cart_state}")
     
             if trans_message.cart_state['pole_rotation'] < 0 and trans_message.cart_state['pole_rotation'] > -TERMINATE_RADIAN:
-                await websocket.send(json.dumps(WebSocketMessage(MessageTypeEnum.COMMAND.value, str(MessageTypeEnum.COMMAND), CartState(0), CartDriver(0)).__dict__, 
+                await websocket.send(json.dumps(WebSocketMessage(MessageTypeEnum.COMMAND.value, str(MessageTypeEnum.COMMAND), None, CartDriver(0)).__dict__, 
                                             default=lambda o: o.__dict__))
             elif trans_message.cart_state['pole_rotation'] > 0 and trans_message.cart_state['pole_rotation'] < TERMINATE_RADIAN:
-                await websocket.send(json.dumps(WebSocketMessage(MessageTypeEnum.COMMAND.value, str(MessageTypeEnum.COMMAND), CartState(0), CartDriver(1)).__dict__, 
+                await websocket.send(json.dumps(WebSocketMessage(MessageTypeEnum.COMMAND.value, str(MessageTypeEnum.COMMAND), None, CartDriver(1)).__dict__, 
                                             default=lambda o: o.__dict__))
             elif trans_message.cart_state['pole_rotation'] == 0:
-                await websocket.send(json.dumps(WebSocketMessage(MessageTypeEnum.COMMAND.value, str(MessageTypeEnum.COMMAND), CartState(0), CartDriver(random.choice([0, 1]))).__dict__, 
+                await websocket.send(json.dumps(WebSocketMessage(MessageTypeEnum.COMMAND.value, str(MessageTypeEnum.COMMAND), None, CartDriver(random.choice([0, 1]))).__dict__, 
                                                 default=lambda o: o.__dict__))
             elif trans_message.cart_state['pole_rotation'] < -TERMINATE_RADIAN or trans_message.cart_state['pole_rotation'] > TERMINATE_RADIAN:
-                await websocket.send(json.dumps(WebSocketMessage(MessageTypeEnum.TERMINATION.value, str(MessageTypeEnum.TERMINATION), CartState(0), CartDriver(0)).__dict__, 
+                await websocket.send(json.dumps(WebSocketMessage(MessageTypeEnum.TERMINATION.value, str(MessageTypeEnum.TERMINATION), None, CartDriver(0)).__dict__, 
                                                 default=lambda o: o.__dict__))
     except websockets.exceptions.ConnectionClosed:
         pass

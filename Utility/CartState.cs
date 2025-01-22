@@ -1,3 +1,4 @@
+using Godot;
 using static GlobalEnums;
 
 namespace Utility
@@ -6,11 +7,17 @@ namespace Utility
     {
         public CartState() {}
 
-        public CartState(float poleRotation)
+        public CartState(float poleRotation, Vector2 location)
         {
             pole_rotation = poleRotation;
+            x = location.X;
+            y = location.Y;
         }
 
         public float pole_rotation { get; set; }
+
+        public float x { get; set; }
+
+        public float y { get; set; }
     }
 }

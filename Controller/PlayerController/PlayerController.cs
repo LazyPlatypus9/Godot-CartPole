@@ -33,7 +33,7 @@ public partial class PlayerController : CharacterBody2D
 	{
 		MoveAndSlide();
 
-		Global.Instance.SendToServer(new WebSocketMessage(MessageTypeEnum.DATA, new CartState(Pendulum.Rotation)));
+		Global.Instance.SendToServer(new WebSocketMessage(MessageTypeEnum.DATA, new CartState(Pendulum.Rotation, Position)));
 	}
 
 	private void MoveCart(MoveCart moveCart)
