@@ -1,6 +1,5 @@
-[gd_scene load_steps=3 format=3 uid="uid://h7p6rl7457t1"]
+[gd_scene load_steps=2 format=3 uid="uid://h7p6rl7457t1"]
 
-[ext_resource type="PackedScene" uid="uid://tcy5ayilq1g4" path="res://Controller/PlayerController/PlayerController.tscn" id="1_dewnk"]
 [ext_resource type="Script" path="res://GameScene.cs" id="1_f7q5g"]
 
 [node name="Node2D" type="Node2D"]
@@ -11,5 +10,5 @@ offset_right = 40.0
 offset_bottom = 23.0
 text = "Hello World"
 
-[node name="PlayerController" parent="." instance=ExtResource("1_dewnk")]
-position = Vector2(281, 213)
+[node name="Start" type="Node2D" parent="."]
+position = Vector2(583, 281)

@@ -39,5 +39,7 @@ namespace Utility
         public string content { get; set; }
 
         public CartState cart_state { get; set; } = null;
+
+        public CartDriver cart_driver { get; set; } = null;
     }
 }

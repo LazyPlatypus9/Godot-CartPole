@@ -1,6 +1,3 @@
 class CartState:
-    def __init__(self, pole_rotation, movement):
+    def __init__(self, pole_rotation):
         self.pole_rotation = pole_rotation
-        self.movement = movement
-
-    

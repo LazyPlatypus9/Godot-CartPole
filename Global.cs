@@ -60,13 +60,17 @@ public sealed class Global
 
                 Logger.Instance.Trace($"message_type: {translatedMessage.message_type}, content: {translatedMessage.content}", Logger.LogColor.Cyan);
             
-                if ((MessageTypeEnum)translatedMessage.message_type == MessageTypeEnum.COMMAND)
+                switch ((MessageTypeEnum)translatedMessage.message_type)
                 {
-                    Messenger.Default.Send(new MoveCart() { InputsEnum = (InputsEnum)translatedMessage.cart_state.movement });
+                    case MessageTypeEnum.COMMAND:
+                        Messenger.Default.Send(new MoveCart() { InputsEnum = (InputsEnum)translatedMessage.cart_driver.movement });
+                        break;
+                    case MessageTypeEnum.TERMINATION:
+                        Messenger.Default.Send(new AgentCommand() { Restart = true });
+                        break;
                 }
             }
         }
-        
     }
 
     public async void SendToServer(WebSocketMessage webSocketMessage)

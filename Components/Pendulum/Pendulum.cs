@@ -11,8 +11,6 @@ public partial class Pendulum : RigidBody2D
 
 	public CollisionShape2D BodyCollision { get; private set; }
 
-	public DimensionBox DimensionBox { get; private set; }
-
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -20,7 +18,5 @@ public partial class Pendulum : RigidBody2D
 
 		Pole = GetNode<Polygon2D>(PendulumNaming.POLE);
 		Weight = Pole.GetNode<Polygon2D>(PendulumNaming.WEIGHT);
-
-		DimensionBox = GetNode<DimensionBox>(GlobalNaming.DIMENSION_BOX);
 	}
 }

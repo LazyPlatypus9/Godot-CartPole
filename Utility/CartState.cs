@@ -11,13 +11,6 @@ namespace Utility
             pole_rotation = poleRotation;
         }
 
-        public CartState(InputsEnum movement)
-        {
-            this.movement = (int)movement;
-        }
-
         public float pole_rotation { get; set; }
-
-        public int movement { get; set; } = 0;
     }
 }

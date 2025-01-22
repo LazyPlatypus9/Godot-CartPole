@@ -1,13 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://d3wq8jbtg74ee"]
+[gd_scene load_steps=3 format=3 uid="uid://d3wq8jbtg74ee"]
 
 [ext_resource type="Script" path="res://Components/Pendulum/Pendulum.cs" id="1_st4as"]
-[ext_resource type="Script" path="res://Components/DimensionBox.cs" id="2_tbuof"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_25ht0"]
 size = Vector2(4, 48)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_of1xg"]
-size = Vector2(4, 33)
 
 [node name="Pendulum" type="RigidBody2D"]
 script = ExtResource("1_st4as")
@@ -25,12 +21,3 @@ polygon = PackedVector2Array(-2, 0, -2, 48, 2, 48, 2, 0)
 position = Vector2(-0.000109013, 43)
 color = Color(0.764706, 0.160784, 0, 1)
 polygon = PackedVector2Array(-3, 0, 3, 0, 3, 5, -3, 5)
-
-[node name="DimensionBox" type="Area2D" parent="."]
-collision_layer = 2
-collision_mask = 2
-script = ExtResource("2_tbuof")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="DimensionBox"]
-position = Vector2(0, -31.5)
-shape = SubResource("RectangleShape2D_of1xg")
