@@ -77,6 +77,16 @@ public sealed class Global
     {
         var message = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(webSocketMessage));
 
-        await Client.SendAsync(new ArraySegment<byte>(message), WebSocketMessageType.Text, true, CancellationToken.None);
+        if (Client.State == WebSocketState.Open)
+        {
+             try
+            {
+                await Client.SendAsync(new ArraySegment<byte>(message), WebSocketMessageType.Text, true, CancellationToken.None);
+            }
+            catch (Exception exception)
+            {
+                Logger.Instance.Trace(exception.Message, Logger.LogColor.Red);
+            }
+        }
     }
 }
