@@ -22,3 +22,5 @@ polygon = PackedVector2Array(-20, -4, 28, -4, 28, 4, -20, 4, -20, 0)
 [node name="PinJoint2D" type="PinJoint2D" parent="."]
 node_a = NodePath("../Pendulum")
 node_b = NodePath("..")
+
+[node name="Camera2D" type="Camera2D" parent="."]

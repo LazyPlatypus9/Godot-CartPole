@@ -31,9 +31,11 @@ public partial class PlayerController : CharacterBody2D
 
     public override void _PhysicsProcess(double delta)
 	{
+		Global.Instance.SendToServer(new WebSocketMessage(MessageTypeEnum.DATA, new CartState(Pendulum.Rotation, Position)));
+
 		MoveAndSlide();
 
-		Global.Instance.SendToServer(new WebSocketMessage(MessageTypeEnum.DATA, new CartState(Pendulum.Rotation, Position)));
+		Global.Instance.SendToServer(new WebSocketMessage(MessageTypeEnum.FEEDBACK, new CartState(Pendulum.Rotation, Position)));
 	}
 
 	private void MoveCart(MoveCart moveCart)

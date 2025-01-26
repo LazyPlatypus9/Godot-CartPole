@@ -1,2 +1,5 @@
 asyncio
 websockets
+torch
+torchvision
+torchaudio
