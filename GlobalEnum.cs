@@ -15,7 +15,14 @@ public static class GlobalEnums
 		DATA,
 		COMMAND,
 		FEEDBACK,
-		READY
+		SERVER_READY,
+		CLIENT_READY
+	}
+
+	public enum AgentCommandEnum
+	{
+		RESTART,
+		SERVER_READY
 	}
 
 	public enum AgentStateEnum

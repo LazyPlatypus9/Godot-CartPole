@@ -4,14 +4,14 @@ namespace  Components
 {
     public static class PendulumNaming
     {
-        public static string POLE = "Pole";
+        public const string POLE = "Pole";
 
-        public static string WEIGHT = "Weight";
+        public const string WEIGHT = "Weight";
 
-        public static string OBJECT_NAME = "Pendulum";
+        public const string OBJECT_NAME = "Pendulum";
 
-        public static string BODY = "Body";
+        public const string BODY = "Body";
 
-        public static string BODY_COLLISION = "BodyCollision";
+        public const string BODY_COLLISION = "BodyCollision";
     }
 }

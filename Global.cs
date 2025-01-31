@@ -66,7 +66,10 @@ public sealed class Global
                         Messenger.Default.Send(new MoveCart() { InputsEnum = (InputsEnum)translatedMessage.cart_driver.movement });
                         break;
                     case MessageTypeEnum.TERMINATION:
-                        Messenger.Default.Send(new AgentCommand() { Restart = true });
+                        Messenger.Default.Send(new AgentCommand() { Command = AgentCommandEnum.RESTART });
+                        break;
+                    case MessageTypeEnum.SERVER_READY:
+                        Messenger.Default.Send(new AgentCommand() { Command = AgentCommandEnum.SERVER_READY });
                         break;
                 }
             }

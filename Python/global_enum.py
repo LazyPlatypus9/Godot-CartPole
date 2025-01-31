@@ -6,7 +6,8 @@ class MessageTypeEnum(Enum):
     DATA = 2
     COMMAND = 3
     FEEDBACK = 4
-    READY = 5
+    SERVER_READY = 5
+    CLIENT_READY = 6
 
 class InputsEnum(Enum):
     MOVE_LEFT = 0

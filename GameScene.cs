@@ -2,6 +2,7 @@ using Godot;
 using System;
 using Utility;
 using Utility.MessengerMessages;
+using static GlobalEnums;
 
 public partial class GameScene : Node
 {
@@ -47,7 +48,7 @@ public partial class GameScene : Node
 
 	private void AgentCommand(AgentCommand agentCommand)
 	{
-		if (agentCommand.Restart)
+		if (agentCommand.Command == AgentCommandEnum.RESTART)
 		{
 			RemoveAgent();
 

@@ -4,6 +4,6 @@ namespace Utility.MessengerMessages
 {
     public class AgentCommand()
     {
-        public bool Restart { get; set; }
+        public AgentCommandEnum Command { get; set;}
     }
 }

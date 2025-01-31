@@ -66,7 +66,7 @@ async def echo(websocket):
     optimizer = optim.Adam(policy_network.parameters(), lr=learning_rate, amsgrad=True)
 
     # stores the memory as a double-ended queue
-    memory = ReplayMemory(5000)
+    memory = ReplayMemory(10000)
 
     # how often the target policy will update, i.e. once every x steps
     target_policy_update_rate = 1000
@@ -75,14 +75,14 @@ async def echo(websocket):
     episode_duration = 0
 
     # connection ping
-    await websocket.send(json.dumps(WebSocketMessage(MessageTypeEnum.PING.value, str(MessageTypeEnum.PING), None, None).__dict__))
+    await websocket.send(json.dumps(WebSocketMessage(MessageTypeEnum.SERVER_READY.value, str(MessageTypeEnum.SERVER_READY), None, None).__dict__))
     
     old_cart_state = None
     action = None
     durations = []
     done = False
 
-    ignore_messages = False
+    client_ready = False
 
     try:
         async for message in websocket:
@@ -91,9 +91,10 @@ async def echo(websocket):
             if DEBUG:
                 print(f"{trans_message.message_type}, Episode: {CURRENT_EPISODE}, Global Step: {GLOBAL_STEP}")
 
-            if trans_message.message_type == MessageTypeEnum.READY.value:
-                ignore_messages = False
-            elif ignore_messages:
+            if trans_message.message_type == MessageTypeEnum.CLIENT_READY.value and not client_ready:
+                client_ready = True
+
+            if not client_ready:
                 if DEBUG:
                     print(f"Ignoring: {trans_message.message_type}")
                 
@@ -153,11 +154,12 @@ async def echo(websocket):
                     CURRENT_EPISODE = CURRENT_EPISODE + 1
                     durations.append(episode_duration)
                     episode_duration = 0
-
-                    ignore_messages = True
+                    client_ready = False
 
                     await websocket.send(json.dumps(WebSocketMessage(MessageTypeEnum.TERMINATION.value, str(MessageTypeEnum.TERMINATION), None, CartDriver(0)).__dict__, 
                                                     default=lambda o: o.__dict__))
+                    
+                    await websocket.send(json.dumps(WebSocketMessage(MessageTypeEnum.SERVER_READY.value, str(MessageTypeEnum.SERVER_READY), None, None).__dict__))
     except websockets.exceptions.ConnectionClosed:
         pass
 

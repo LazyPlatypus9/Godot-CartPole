@@ -1,0 +1,59 @@
+[gd_scene load_steps=9 format=3 uid="uid://tcy5ayilq1g4"]
+
+[ext_resource type="Script" path="res://Components/Controller/PlayerController/PlayerController.cs" id="1_otybv"]
+[ext_resource type="PackedScene" uid="uid://d3wq8jbtg74ee" path="res://Components/Pendulum/Pendulum.tscn" id="2_t5nme"]
+[ext_resource type="Script" path="res://Components/StateMachine/StateManager.cs" id="3_dojvm"]
+[ext_resource type="Script" path="res://Components/Controller/PlayerController/States/SendState.cs" id="4_p47yb"]
+[ext_resource type="Script" path="res://Components/Controller/PlayerController/States/MoveCart.cs" id="5_3xudm"]
+[ext_resource type="Script" path="res://Components/Controller/PlayerController/States/Observe.cs" id="6_q8nn2"]
+[ext_resource type="Script" path="res://Components/Controller/PlayerController/States/Start.cs" id="7_1wm2e"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sfni3"]
+size = Vector2(47, 8)
+
+[node name="PlayerController" type="CharacterBody2D"]
+script = ExtResource("1_otybv")
+Speed = 15.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_sfni3")
+
+[node name="Skin" type="Polygon2D" parent="."]
+offset = Vector2(-4, 0)
+polygon = PackedVector2Array(-20, -4, 28, -4, 28, 4, -20, 4, -20, 0)
+
+[node name="Pendulum" parent="." instance=ExtResource("2_t5nme")]
+
+[node name="PinJoint2D" type="PinJoint2D" parent="."]
+node_a = NodePath("../Pendulum")
+node_b = NodePath("..")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="StateManager" type="Node" parent="." node_paths=PackedStringArray("StartingState")]
+script = ExtResource("3_dojvm")
+StartingState = NodePath("Start")
+
+[node name="SendState" type="Node" parent="StateManager" node_paths=PackedStringArray("MoveCart", "Parent", "Parent")]
+script = ExtResource("4_p47yb")
+MoveCart = NodePath("../MoveCart")
+Parent = NodePath("../..")
+Parent = NodePath("../..")
+
+[node name="MoveCart" type="Node" parent="StateManager" node_paths=PackedStringArray("Observe", "Parent", "Parent")]
+script = ExtResource("5_3xudm")
+Observe = NodePath("../Observe")
+Parent = NodePath("../..")
+Parent = NodePath("../..")
+
+[node name="Observe" type="Node" parent="StateManager" node_paths=PackedStringArray("SendState", "Parent", "Parent")]
+script = ExtResource("6_q8nn2")
+SendState = NodePath("../SendState")
+Parent = NodePath("../..")
+Parent = NodePath("../..")
+
+[node name="Start" type="Node" parent="StateManager" node_paths=PackedStringArray("SendState", "Parent", "Parent")]
+script = ExtResource("7_1wm2e")
+SendState = NodePath("../SendState")
+Parent = NodePath("../..")
+Parent = NodePath("../..")
