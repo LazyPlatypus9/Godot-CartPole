@@ -7,17 +7,20 @@ namespace Utility
     {
         public CartState() {}
 
-        public CartState(float poleRotation, Vector2 location)
+        public CartState(float poleRotation, float x, float velocity, float angularVelocity)
         {
             pole_rotation = poleRotation;
-            x = location.X;
-            y = location.Y;
+            this.x = x;
+            this.velocity = velocity;
+            angular_velocity = angularVelocity;
         }
 
         public float pole_rotation { get; set; }
 
         public float x { get; set; }
 
-        public float y { get; set; }
+        public float velocity { get; set; }
+
+        public float angular_velocity { get; set; }
     }
 }

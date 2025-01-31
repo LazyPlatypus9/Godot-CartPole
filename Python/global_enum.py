@@ -6,6 +6,7 @@ class MessageTypeEnum(Enum):
     DATA = 2
     COMMAND = 3
     FEEDBACK = 4
+    READY = 5
 
 class InputsEnum(Enum):
     MOVE_LEFT = 0

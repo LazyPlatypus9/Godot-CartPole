@@ -79,7 +79,7 @@ public sealed class Global
 
         if (Client.State == WebSocketState.Open)
         {
-             try
+            try
             {
                 await Client.SendAsync(new ArraySegment<byte>(message), WebSocketMessageType.Text, true, CancellationToken.None);
             }

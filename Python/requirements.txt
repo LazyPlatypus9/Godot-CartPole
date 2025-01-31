@@ -3,3 +3,4 @@ websockets
 torch
 torchvision
 torchaudio
+matplotlib

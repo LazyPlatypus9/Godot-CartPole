@@ -12,7 +12,15 @@ public partial class PlayerController : CharacterBody2D
 
 	public const float JumpVelocity = -400.0f;
 
+	public Vector2 OldPosition { get; private set; }
+
+	public float OldRotation { get; private set; }
+
 	public Pendulum Pendulum { get; private set; }
+
+	public AgentStateEnum AgentState { get; private set; }
+
+	public bool CommandMove { get; private set; }
 
 	// Get the gravity from the project settings to be synced with RigidBody nodes.
 	public float gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
@@ -21,7 +29,14 @@ public partial class PlayerController : CharacterBody2D
     {
        	Pendulum = GetNode<Pendulum>(PendulumNaming.OBJECT_NAME);
 
+		AgentState = AgentStateEnum.ACT;
+
 		Messenger.Default.Register<MoveCart>(this, MoveCart);
+
+		if (Global.Client != null)
+		{
+			Global.Instance.SendToServer(new WebSocketMessage(MessageTypeEnum.READY));
+		}
     }
 
     public override void _ExitTree()
@@ -29,13 +44,35 @@ public partial class PlayerController : CharacterBody2D
         Messenger.Default.Unregister<MoveCart>(this, MoveCart);
     }
 
+    public override void _Process(double delta)
+    {
+        switch (AgentState)
+		{
+			case AgentStateEnum.ACT:
+				if (Global.Client.State == System.Net.WebSockets.WebSocketState.Open)
+				{
+					Global.Instance.SendToServer(new WebSocketMessage(MessageTypeEnum.DATA, new CartState(Pendulum.Rotation, Position.X, Velocity.X, Pendulum.AngularVelocity)));
+
+					AgentState = AgentStateEnum.WAIT;
+				}
+
+				break;
+		}
+    }
+
     public override void _PhysicsProcess(double delta)
 	{
-		Global.Instance.SendToServer(new WebSocketMessage(MessageTypeEnum.DATA, new CartState(Pendulum.Rotation, Position)));
+		switch (AgentState)
+		{
+			case AgentStateEnum.OBSERVE:
+				MoveAndSlide();
 
-		MoveAndSlide();
+				Global.Instance.SendToServer(new WebSocketMessage(MessageTypeEnum.FEEDBACK, new CartState(Pendulum.Rotation, Position.X, Velocity.X, Pendulum.AngularVelocity)));
 
-		Global.Instance.SendToServer(new WebSocketMessage(MessageTypeEnum.FEEDBACK, new CartState(Pendulum.Rotation, Position)));
+				AgentState = AgentStateEnum.ACT;
+
+				break;
+		}
 	}
 
 	private void MoveCart(MoveCart moveCart)
@@ -56,5 +93,7 @@ public partial class PlayerController : CharacterBody2D
 		}
 
 		Velocity = velocity;
+
+		AgentState = AgentStateEnum.OBSERVE;
 	}
 }

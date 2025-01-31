@@ -14,6 +14,14 @@ public static class GlobalEnums
 		PING,
 		DATA,
 		COMMAND,
-		FEEDBACK
+		FEEDBACK,
+		READY
+	}
+
+	public enum AgentStateEnum
+	{
+		ACT,
+		OBSERVE,
+		WAIT
 	}
 }

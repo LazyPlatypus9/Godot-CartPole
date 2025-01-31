@@ -11,4 +11,5 @@ class DQN(nn.Module):
     def forward(self, x):
         x = torch.relu(self.fc1(x))
         x = torch.relu(self.fc2(x))
-        return self.fc3(x)
+        x = self.fc3(x)
+        return x
