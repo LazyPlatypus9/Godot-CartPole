@@ -2,3 +2,4 @@
 .godot/
 .virtual
 __pycache__
+*.kra~
