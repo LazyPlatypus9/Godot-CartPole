@@ -9,21 +9,13 @@ using static GlobalEnums;
 public partial class PlayerController : CharacterBody2D
 {
 	[Export]
-	public float Speed = 300.0f;
-
-	public const float JumpVelocity = -400.0f;
-
-	public Vector2 OldPosition { get; private set; }
-
-	public float OldRotation { get; private set; }
+	public float Speed = 15.0f;
 
 	public Pendulum Pendulum { get; private set; }
 
 	public StateManager StateManager { get; private set; }
 
 	public bool ServerReady { get; private set; } = false;
-
-	public bool CommandMove { get; private set; }
 
 	// Get the gravity from the project settings to be synced with RigidBody nodes.
 	public float gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
