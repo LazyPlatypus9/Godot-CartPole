@@ -13,7 +13,7 @@
             "cwd": "${workspaceFolder}",
             "console": "internalConsole",
             "stopAtEntry": false,
-            "args": ["--path", "${workspaceRoot}"]
+            "args": ["--path", "${workspaceRoot}/Godot"]
         },
         {
             "name": "Godot-Windows",
@@ -24,7 +24,7 @@
             "cwd": "${workspaceFolder}",
             "console": "internalConsole",
             "stopAtEntry": false,
-            "args": ["--path", "${workspaceRoot}"],
+            "args": ["--path", "${workspaceRoot}/Godot"],
         },
         {
             "name": "Pytorch-Server",
