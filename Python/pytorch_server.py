@@ -42,7 +42,9 @@ async def echo(websocket):
             await state_machine.on_event(trans_message)
 
             if model.current_episode > CONFIG['training']['episodes']:
-                requests.post(FLASK_URL + '/data/add', json={'id': id, 'durations': model.durations})
+                requests.post(FLASK_URL + '/data/add', json={'id': id, 
+                                                             'config': CONFIG, 
+                                                             'durations': model.durations})
 
                 plt.plot(model.durations)
                 plt.xlabel("Episode")
