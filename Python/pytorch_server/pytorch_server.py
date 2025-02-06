@@ -3,19 +3,13 @@ import math
 import websockets
 import json
 import requests
-from config import CONFIG
 from model import Model
-from replay_memory import ReplayMemory
-from dqn import DQN
-from cart_state import CartState
-from cart_driver import CartDriver
+from config import CONFIG
 from websocket_message import WebSocketMessage
-from global_enum import InputsEnum, MessageTypeEnum
-from types import SimpleNamespace
+from global_enum import MessageTypeEnum
 from state_machine import StateMachine
 
 import numpy as np
-import torch
 import torch.nn as nn
 import torch.optim as optim
 from collections import deque

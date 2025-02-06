@@ -1,11 +1,9 @@
 import json
-import requests
 from config import CONFIG
 from cart_driver import CartDriver
 from websocket_message import WebSocketMessage
 from cart_state import CartState
 from global_enum import InputsEnum, MessageTypeEnum
-from model import Model
 from state import State
 
 class StartState(State):

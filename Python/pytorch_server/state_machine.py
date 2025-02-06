@@ -1,6 +1,5 @@
 from websocket_message import WebSocketMessage
 from model import Model
-from global_enum import MessageTypeEnum
 from states import StartState
 
 class StateMachine(object):

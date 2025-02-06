@@ -30,14 +30,14 @@
             "name": "Pytorch-Server",
             "type": "debugpy",
             "request": "launch",
-            "program": "${workspaceFolder}/Python/pytorch_server.py",
+            "program": "${workspaceFolder}/Python/pytorch_server/pytorch_server.py",
             "python": "${workspaceFolder}/Python/.virtual/Scripts/python.exe"
         },
         {
             "name": "Flask-Service",
             "type": "debugpy",
             "request": "launch",
-            "program": "${workspaceFolder}/Python/flask_service.py",
+            "program": "${workspaceFolder}/Python/flask_service/flask_service.py",
             "python": "${workspaceFolder}/Python/.virtual/Scripts/python.exe"
         }
     ],
