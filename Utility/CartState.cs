@@ -1,3 +1,4 @@
+using System;
 using Godot;
 using static GlobalEnums;
 
@@ -22,5 +23,7 @@ namespace Utility
         public float velocity { get; set; }
 
         public float angular_velocity { get; set; }
+
+        public DateTime date { get; set; } = DateTime.Now;
     }
 }
