@@ -1,4 +1,5 @@
 import json
+import requests
 from config import CONFIG
 from cart_driver import CartDriver
 from websocket_message import WebSocketMessage

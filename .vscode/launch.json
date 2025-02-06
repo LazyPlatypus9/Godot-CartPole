@@ -27,17 +27,24 @@
             "args": ["--path", "${workspaceRoot}"],
         },
         {
-            "name": "Python-Windows",
+            "name": "Pytorch-Server",
             "type": "debugpy",
             "request": "launch",
-            "program": "${workspaceFolder}/Python/server.py",
+            "program": "${workspaceFolder}/Python/pytorch_server.py",
+            "python": "${workspaceFolder}/Python/.virtual/Scripts/python.exe"
+        },
+        {
+            "name": "Flask-Service",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/Python/flask_service.py",
             "python": "${workspaceFolder}/Python/.virtual/Scripts/python.exe"
         }
     ],
     "compounds": [
         {
             "name": "Windows",
-            "configurations": ["Python-Windows", "Godot-Windows"],
+            "configurations": ["Pytorch-Server", "Flask-Service", "Godot-Windows"],
             "stopAll": true
         }
     ]

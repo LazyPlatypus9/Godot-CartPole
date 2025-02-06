@@ -2,7 +2,7 @@ import asyncio
 import math
 import websockets
 import json
-import random
+import requests
 from config import CONFIG
 from model import Model
 from replay_memory import ReplayMemory
@@ -23,6 +23,7 @@ from collections import deque
 import matplotlib.pyplot as plt
 
 DEBUG = True
+FLASK_URL = 'http://localhost:5000'
 
 async def echo(websocket):
     # connection ping
@@ -32,6 +33,8 @@ async def echo(websocket):
 
     state_machine = StateMachine(model, websocket)
 
+    id = json.loads(requests.get(FLASK_URL + '/data/get_last_row').text)['id'] + 1
+
     try:
         async for message in websocket:
             trans_message = WebSocketMessage(**json.loads(message))
@@ -39,6 +42,8 @@ async def echo(websocket):
             await state_machine.on_event(trans_message)
 
             if model.current_episode > CONFIG['training']['episodes']:
+                requests.post(FLASK_URL + '/data/add', json={'id': id, 'durations': model.durations})
+
                 plt.plot(model.durations)
                 plt.xlabel("Episode")
                 plt.ylabel("Duration")
